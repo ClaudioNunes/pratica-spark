@@ -3,7 +3,11 @@
   "image": "mcr.microsoft.com/devcontainers/python:3.11",
   
   "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "moby": true,
+      "dockerDashComposeVersion": "v2"
+    },
     "ghcr.io/devcontainers/features/java:1": {
       "version": "11",
       "installMaven": "false",
@@ -24,7 +28,11 @@
         "python.defaultInterpreterPath": "/usr/local/bin/python",
         "python.linting.enabled": true,
         "python.linting.pylintEnabled": true,
-        "python.formatting.provider": "black",
+        "python.formatting.provider": "none",
+        "[python]": {
+          "editor.defaultFormatter": "ms-python.python",
+          "editor.formatOnSave": true
+        },
         "editor.formatOnSave": true,
         "files.exclude": {
           "**/__pycache__": true,
@@ -34,7 +42,7 @@
     }
   },
 
-  "postCreateCommand": "bash init-repo.sh",
+  "postCreateCommand": "bash ${containerWorkspaceFolder}/init-repo.sh",
 
   "forwardPorts": [4040, 8888],
   "portsAttributes": {
@@ -48,5 +56,9 @@
     }
   },
 
-  "remoteUser": "vscode"
+  "remoteUser": "vscode",
+  
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+  ]
 }
