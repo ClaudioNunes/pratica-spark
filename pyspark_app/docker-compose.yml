@@ -8,6 +8,7 @@ services:
     volumes:
       - ./data:/app/data
     command: python3 data_generator.py
+    user: root  # Necessário para escrever no volume montado
     profiles:
       - setup
 
@@ -18,6 +19,7 @@ services:
     volumes:
       - ./data:/app/data
     command: python3 spark_word_count.py
+    user: root  # Necessário para ler/escrever no volume montado
     environment:
       - SPARK_MASTER=local[*]
     profiles:
@@ -30,6 +32,7 @@ services:
     volumes:
       - ./data:/app/data
     command: python3 spark_sales_analysis.py
+    user: root  # Necessário para ler/escrever no volume montado
     environment:
       - SPARK_MASTER=local[*]
       - SPARK_DRIVER_MEMORY=2g
@@ -44,6 +47,7 @@ services:
     command: pyspark
     stdin_open: true
     tty: true
+    user: root  # Necessário para ler/escrever no volume montado
     environment:
       - SPARK_MASTER=local[*]
     profiles:
@@ -59,6 +63,7 @@ services:
     ports:
       - "8888:8888"
     command: jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
+    user: root  # Necessário para Jupyter e acesso aos volumes
     environment:
       - SPARK_MASTER=local[*]
     profiles:

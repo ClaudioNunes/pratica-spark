@@ -17,17 +17,24 @@ COPY requirements.txt .
 # Instala dependências Python adicionais
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Cria diretórios necessários
+# Cria diretórios necessários com permissões adequadas
 RUN mkdir -p /app/data /app/data/output && \
-    chmod -R 777 /app/data
+    chmod -R 777 /app/data && \
+    chown -R spark:spark /app
 
 # Copia scripts Python
 COPY *.py ./
 
-# Torna scripts executáveis
-RUN chmod +x *.py
+# Torna scripts executáveis e ajusta proprietário
+RUN chmod +x *.py && \
+    chown -R spark:spark /app
 
-# Volta para usuário spark (não-root)
+# Volta para usuário spark (não-root) - mais seguro que root
+USER spark
+
+# Garante que o usuário spark pode escrever nos diretórios necessários
+USER root
+RUN chmod -R 777 /app/data /tmp
 USER spark
 
 # Configura variáveis de ambiente

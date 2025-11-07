@@ -214,6 +214,43 @@ Antes de prosseguir, responda:
 
 ---
 
+## ⚠️ Importante: Permissões do Docker (Windows)
+
+### Configurações Necessárias
+
+Para garantir que os comandos Docker funcionem corretamente no Windows, siga estas etapas:
+
+#### 1. Docker Desktop - Compartilhamento de Drive
+1. Abra **Docker Desktop**
+2. Vá em **Settings** → **Resources** → **File Sharing**
+3. Certifique-se de que a unidade do projeto está compartilhada
+4. Clique em **Apply & Restart**
+
+#### 2. PowerShell - Permissões de Execução
+Execute no PowerShell como Administrador:
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+#### 3. WSL2 (Recomendado)
+```powershell
+# Verificar instalação
+wsl --list --verbose
+
+# Se necessário, instalar
+wsl --install
+```
+
+### Correções Implementadas
+
+✅ **Dockerfile**: Permissões adequadas para diretórios de dados  
+✅ **docker-compose.yml**: Configuração `user: root` para acesso a volumes  
+✅ **Compatibilidade Windows**: Bind mounts funcionando corretamente
+
+**📄 Para mais detalhes**, consulte: `pyspark_app/PERMISSIONS_GUIDE.md`
+
+---
+
 ## Parte 2: Caso de Uso - Análise de Vendas de E-commerce
 
 ### 2.1 Contexto do Problema
@@ -232,9 +269,9 @@ Antes de prosseguir, responda:
 **Estrutura dos dados:**
 ```csv
 transaction_id,date,customer_id,product_id,product_name,category,quantity,price,region
-TX001,2024-01-15,C101,P501,Notebook,Electronics,1,2500.00,Southeast
-TX002,2024-01-15,C102,P502,Mouse,Electronics,2,45.00,South
-TX003,2024-01-16,C103,P503,Book,Books,3,35.00,Northeast
+TX001,2024-01-15,C101,P501,Notebook,Eletrônicos,1,2500.00,Sudeste
+TX002,2024-01-15,C102,P502,Mouse,Eletrônicos,2,45.00,Sul
+TX003,2024-01-16,C103,P503,Livro,Livros,3,35.00,Nordeste
 ...
 ```
 
@@ -554,183 +591,50 @@ Verifique:
 
 ### 6.1 O que deve ser entregue
 
-Para comprovar a conclusão desta atividade prática, você deverá entregar **evidências documentadas** de que completou todos os passos do roteiro. A entrega deve ser feita através de um **relatório em formato Markdown** (arquivo `ENTREGA.md`) no seu repositório GitHub.
+Para comprovar a conclusão desta atividade prática, você deverá entregar **screenshots** das execuções na tarefa do Microsoft Teams atribuída ao aluno.
 
-### 6.2 Estrutura do Relatório de Entrega
+### 6.2 Lista de Screenshots Obrigatórios
 
-Crie um arquivo chamado `ENTREGA.md` na raiz do seu repositório com a seguinte estrutura:
+Capture e envie os seguintes screenshots na tarefa do Teams:
 
-```markdown
-# Relatório de Entrega - Atividade Prática PySpark
+**1. Fork do Repositório**
+- Screenshot mostrando seu fork do repositório no GitHub
 
-**Nome do Aluno**: [Seu Nome Completo]  
-**RA**: [Seu Registro Acadêmico]  
-**Data de Entrega**: [DD/MM/AAAA]  
-**Link do Repositório**: [URL do seu fork no GitHub]
+**2. Codespaces em Execução**
+- Screenshot do GitHub Codespaces aberto com os arquivos do projeto
 
----
+**3. Estrutura do Projeto**
+- Screenshot do terminal mostrando a estrutura de arquivos com `ls -la pyspark_app/`
 
-## Parte 1: Fundamentos do Apache Spark
+**4. Geração de Dados**
+- Screenshot da execução do `data_generator.py` mostrando a criação dos arquivos CSV
 
-### Evidências de Conclusão
-- [x] Li e compreendi a arquitetura do Spark
-- [x] Entendi os conceitos de RDD e DataFrame
-- [x] Compreendi a diferença entre Transformações e Ações
-- [x] Entendi o conceito de Lazy Evaluation
+**5. Execução do Word Count**
+- Screenshot da execução completa do `spark_word_count.py` mostrando os resultados
 
-### Reflexão
-[Escreva um parágrafo explicando com suas palavras a diferença entre RDD e DataFrame e por que o Spark é mais rápido que MapReduce]
+**6. Análise de Vendas - Schema**
+- Screenshot mostrando o schema do DataFrame de vendas
 
----
+**7. Análise de Vendas - Receita por Categoria**
+- Screenshot mostrando os resultados da análise de receita por categoria
 
-## Parte 2: Caso de Uso - Análise de Vendas
+**8. Análise de Vendas - Top 10 Produtos**
+- Screenshot mostrando os 10 produtos mais vendidos
 
-### Evidências de Conclusão
-- [x] Compreendi o contexto do problema de negócio
-- [x] Analisei a estrutura dos dados de vendas
-- [x] Identifiquei as análises a serem realizadas
+**9. Análise de Vendas - Vendas por Região**
+- Screenshot mostrando a distribuição de vendas por região
 
-### Perguntas de Negócio
-[Liste 3 perguntas de negócio que poderiam ser respondidas com este dataset além das propostas no roteiro]
+**10. Docker Build**
+- Screenshot mostrando o build da imagem Docker com sucesso
 
----
+**11. Docker Images**
+- Screenshot do comando `docker images` mostrando a imagem `pyspark-app:v1.0` criada
 
-## Parte 3: Configuração do Ambiente
+**12. Execução no Container**
+- Screenshot mostrando a análise de vendas executando dentro do container Docker
 
-### Screenshot 1: Fork do Repositório
-[Insira aqui um screenshot mostrando seu fork do repositório no GitHub]
-
-![Fork do Repositório](./evidencias/screenshot_fork.png)
-
-### Screenshot 2: Codespaces em Execução
-[Insira aqui um screenshot do GitHub Codespaces aberto com os arquivos do projeto]
-
-![Codespaces](./evidencias/screenshot_codespaces.png)
-
-### Screenshot 3: Estrutura do Projeto
-[Insira aqui um screenshot do terminal mostrando a estrutura de arquivos com `ls -la pyspark_app/`]
-
-![Estrutura](./evidencias/screenshot_estrutura.png)
-
----
-
-## Parte 4: Implementação com PySpark
-
-### Screenshot 4: Geração de Dados
-[Screenshot da execução do `data_generator.py` mostrando a criação dos arquivos CSV]
-
-![Geração de Dados](./evidencias/screenshot_data_generator.png)
-
-### Screenshot 5: Execução do Word Count
-[Screenshot da execução completa do `spark_word_count.py` mostrando os resultados]
-
-![Word Count](./evidencias/screenshot_wordcount.png)
-
-### Screenshot 6: Análise de Vendas - Schema
-[Screenshot mostrando o schema do DataFrame de vendas]
-
-![Schema](./evidencias/screenshot_schema.png)
-
-### Screenshot 7: Análise de Vendas - Receita por Categoria
-[Screenshot mostrando os resultados da análise de receita por categoria]
-
-![Receita por Categoria](./evidencias/screenshot_receita_categoria.png)
-
-### Screenshot 8: Análise de Vendas - Top 10 Produtos
-[Screenshot mostrando os 10 produtos mais vendidos]
-
-![Top Produtos](./evidencias/screenshot_top_produtos.png)
-
-### Screenshot 9: Análise de Vendas - Vendas por Região
-[Screenshot mostrando a distribuição de vendas por região]
-
-![Vendas por Região](./evidencias/screenshot_vendas_regiao.png)
-
-### Principais Descobertas
-[Escreva um parágrafo descrevendo os principais insights obtidos da análise de vendas. Qual categoria gera mais receita? Qual região vende mais? Quais produtos são mais populares?]
-
----
-
-## Parte 5: Containerização com Docker
-
-### Screenshot 10: Docker Build
-[Screenshot mostrando o build da imagem Docker com sucesso]
-
-![Docker Build](./evidencias/screenshot_docker_build.png)
-
-### Screenshot 11: Docker Images
-[Screenshot do comando `docker images` mostrando a imagem `pyspark-app:v1.0` criada]
-
-![Docker Images](./evidencias/screenshot_docker_images.png)
-
-### Screenshot 12: Execução no Container
-[Screenshot mostrando a análise de vendas executando dentro do container Docker]
-
-![Execução Container](./evidencias/screenshot_docker_run.png)
-
-### Screenshot 13: Docker Compose
-[Screenshot mostrando a execução com `docker-compose up`]
-
-![Docker Compose](./evidencias/screenshot_docker_compose.png)
-
----
-
-## Checklist Final de Conclusão
-
-### Código
-- [x] Todos os scripts executam sem erros
-- [x] Código está legível e compreensível
-- [x] Dados foram gerados corretamente
-- [x] Análises produziram resultados coerentes
-
-### Docker
-- [x] Imagem Docker foi construída com sucesso
-- [x] Container executa corretamente
-- [x] Análises funcionam dentro do container
-- [x] Docker Compose está funcional
-
-### Documentação
-- [x] Compreendi todos os conceitos apresentados
-- [x] Completei todos os checkpoints do roteiro
-- [x] Documentei minhas descobertas neste relatório
-- [x] Organizei os screenshots em pasta `evidencias/`
-
-### Repositório GitHub
-- [x] Repositório está público ou compartilhado com o professor
-- [x] Todos os arquivos necessários estão presentes
-- [x] README.md original está preservado
-- [x] ENTREGA.md foi criado com todas as evidências
-
----
-
-## Aprendizados e Reflexões
-
-### O que aprendi com esta atividade?
-[Escreva um parágrafo sobre os principais aprendizados desta atividade prática]
-
-### Dificuldades encontradas
-[Descreva as principais dificuldades que encontrou e como as superou]
-
-### Aplicações práticas
-[Descreva ao menos 2 cenários do mundo real onde você poderia aplicar PySpark]
-
----
-
-## Informações de Entrega
-
-**Data de Conclusão**: [DD/MM/AAAA]  
-**Link do Repositório GitHub**: [URL completa]  
-**Commit SHA da Entrega**: [SHA do último commit]
-
----
-
-**Declaração de Autenticidade**
-
-Declaro que este trabalho foi realizado por mim e que todas as evidências apresentadas são autênticas e correspondem à minha execução da atividade prática.
-
-[Seu Nome]  
-[Data]
-```
+**13. Docker Compose**
+- Screenshot mostrando a execução com `docker-compose up`
 
 ### 6.3 Orientações para os Screenshots
 
@@ -738,107 +642,41 @@ Declaro que este trabalho foi realizado por mim e que todas as evidências apres
 
 1. **Qualidade**: Screenshots devem estar legíveis e em resolução adequada
 2. **Conteúdo completo**: Capture toda a saída relevante do comando/execução
-3. **Organização**: Crie uma pasta `evidencias/` no repositório para armazenar as imagens
-4. **Nomenclatura**: Use nomes descritivos (ex: `screenshot_docker_build.png`)
-5. **Formato**: PNG ou JPG
-6. **Timestamp visível**: Se possível, inclua data/hora nas capturas
+3. **Formato**: PNG ou JPG
 
-**Como capturar screenshots no Codespaces:**
+**Como capturar screenshots:**
 - Windows: `Windows + Shift + S`
 - Mac: `Cmd + Shift + 4`
 - Linux: `Print Screen` ou `Gnome Screenshot`
 
-### 6.4 Estrutura de Pastas Esperada
+### 6.4 Como Entregar
 
-Após completar a atividade, seu repositório deve ter:
+1. Capture todos os 13 screenshots obrigatórios
+2. Nomeie os arquivos de forma descritiva (ex: `01_fork_repositorio.png`, `02_codespaces.png`, etc.)
+3. Envie todos os screenshots na **tarefa do Microsoft Teams** atribuída
+4. Certifique-se de que todos os screenshots estão legíveis antes de enviar
 
-```
-seu-repositorio/
-├── README.md                    # Roteiro original (não modificar)
-├── ENTREGA.md                   # Seu relatório de entrega
-├── evidencias/                  # Pasta com screenshots
-│   ├── screenshot_fork.png
-│   ├── screenshot_codespaces.png
-│   ├── screenshot_docker_build.png
-│   └── ... (outros screenshots)
-├── pyspark_app/
-│   ├── spark_sales_analysis.py
-│   ├── spark_word_count.py
-│   ├── data_generator.py
-│   ├── Dockerfile
-│   ├── docker-compose.yml
-│   ├── requirements.txt
-│   └── data/
-│       ├── sales_data.csv
-│       ├── products.csv
-│       └── input.txt
-└── ... (outros arquivos)
-```
-
-### 6.5 Critérios de Avaliação
-
-Sua entrega será avaliada com base nos seguintes critérios:
-
-| Critério | Peso | Descrição |
-|----------|------|-----------|
-| **Completude das Evidências** | 40% | Todos os screenshots obrigatórios estão presentes e legíveis |
-| **Execução Correta** | 30% | As evidências mostram execuções bem-sucedidas de todos os componentes |
-| **Documentação e Reflexão** | 20% | Respostas reflexivas demonstram compreensão dos conceitos |
-| **Organização** | 10% | Repositório bem organizado, screenshots nomeados corretamente |
-
-**Pontuação detalhada:**
-
-- **Parte 1 a 5 completas com evidências**: até 40 pontos
-- **Todas as execuções funcionando corretamente**: até 30 pontos
-- **Reflexões e análises coerentes**: até 20 pontos
-- **Repositório organizado e profissional**: até 10 pontos
-
-**Total**: 100 pontos
-
-### 6.6 Formato e Prazo de Entrega
-
-**Como entregar:**
-1. Certifique-se de que seu repositório está **público** ou compartilhado com o professor
-2. Complete o arquivo `ENTREGA.md` com todas as evidências
-3. Commit e push de todas as alterações
-4. Submeta o **link do repositório** através da plataforma indicada pelo professor
-
-**Prazo**: [A ser definido pelo professor]
-
-**Atenção**: Entregas sem o arquivo `ENTREGA.md` ou sem screenshots não serão aceitas.
-
-### 6.7 Checklist Pré-Entrega
+### 6.5 Checklist Pré-Entrega
 
 Antes de submeter, verifique:
 
-- [ ] Arquivo `ENTREGA.md` criado na raiz do repositório
-- [ ] Todos os 13 screenshots obrigatórios estão presentes
-- [ ] Pasta `evidencias/` foi criada e contém todas as imagens
+- [ ] Todos os 13 screenshots obrigatórios foram capturados
 - [ ] Screenshots estão legíveis e mostram informações completas
-- [ ] Seções de reflexão foram preenchidas com suas palavras
-- [ ] Checklist final está marcado corretamente
-- [ ] Informações pessoais (nome, RA) estão corretas
-- [ ] Link do repositório está funcional
-- [ ] Repositório está público ou compartilhado com o professor
-- [ ] Todos os arquivos do projeto estão no repositório
-- [ ] Testei que as análises executam corretamente
+- [ ] Arquivos estão nomeados de forma clara
+- [ ] Todos os scripts executaram corretamente
+- [ ] A imagem Docker foi construída com sucesso
+- [ ] As análises produziram resultados coerentes
 
-### 6.8 Dúvidas Frequentes
+### 6.6 Dúvidas Frequentes
 
 **P: Preciso publicar a imagem no Docker Hub?**  
 R: Não é obrigatório para esta entrega. Basta ter evidências de que construiu e executou localmente.
-
-**P: Posso usar print/export do terminal ao invés de screenshots?**  
-R: Não. Screenshots são obrigatórios pois mostram o contexto completo de execução.
 
 **P: O que fazer se meu Codespaces expirar?**  
 R: Você pode recriar o Codespace do seu fork. Os arquivos estarão lá se você fez commit.
 
 **P: Posso trabalhar localmente ao invés de usar Codespaces?**  
 R: Sim, desde que consiga executar todas as partes e gerar as evidências.
-
-**P: Tenho que preencher todos os campos do template?**  
-R: Sim. Campos vazios ou incompletos resultarão em desconto na nota.
 
 ---
 
@@ -882,47 +720,6 @@ R: Sim. Campos vazios ou incompletos resultarão em desconto na nota.
 
 - **Databricks Certified Associate Developer for Apache Spark**
 - **Cloudera Certified Spark and Hadoop Developer**
-
----
-
-## Parte 8: Checklist Final e Avaliação
-
-### 8.1 Checklist de Conclusão
-
-Antes de entregar, verifique:
-
-**Código**:
-- [ ] Todos os scripts executam sem erros
-- [ ] Código está comentado e legível
-- [ ] Boas práticas de PySpark foram aplicadas
-- [ ] Tratamento de erros foi implementado
-
-**Docker**:
-- [ ] Imagem Docker constrói com sucesso
-- [ ] Container executa corretamente
-- [ ] Volumes estão configurados
-- [ ] Docker Compose funciona
-
-**Documentação**:
-- [ ] README está completo
-- [ ] Comentários no código estão claros
-- [ ] RESULTADOS.md foi criado
-- [ ] Tabela comparativa foi preenchida
-
-**GitHub**:
-- [ ] Repositório está público/compartilhado
-- [ ] Commits têm mensagens descritivas
-- [ ] .gitignore está configurado
-- [ ] README renderiza corretamente
-
-**Exercícios**:
-- [ ] Pelo menos 3 exercícios foram completados
-- [ ] Resultados foram documentados
-- [ ] Análise comparativa foi realizada
-
-### 8.2 Orientações para a Entrega
-
-Para instruções detalhadas sobre os entregáveis, consulte a **Parte 6: Entregáveis da Atividade**.
 
 ---
 

@@ -13,38 +13,38 @@ from pathlib import Path
 NUM_TRANSACTIONS = 1000
 OUTPUT_FILE = "data/sales_data.csv"
 
-# Dados fictícios
+# Dados fictícios em Português Brasileiro
 PRODUCTS = [
-    ("P001", "Notebook Dell", "Electronics", 2800.00),
-    ("P002", "Mouse Logitech", "Electronics", 45.00),
-    ("P003", "Teclado Mecânico", "Electronics", 250.00),
-    ("P004", "Monitor LG 24\"", "Electronics", 850.00),
-    ("P005", "Webcam HD", "Electronics", 180.00),
-    ("P006", "Fone Bluetooth", "Electronics", 120.00),
-    ("P007", "SSD 500GB", "Electronics", 350.00),
-    ("P008", "Livro Python", "Books", 45.00),
-    ("P009", "Livro Data Science", "Books", 65.00),
-    ("P010", "Livro Machine Learning", "Books", 80.00),
-    ("P011", "Caderno", "Stationery", 15.00),
-    ("P012", "Caneta Pack 10", "Stationery", 12.00),
-    ("P013", "Mochila Executiva", "Accessories", 180.00),
-    ("P014", "Garrafa Térmica", "Accessories", 45.00),
-    ("P015", "Tablet Samsung", "Electronics", 1200.00),
-    ("P016", "SmartWatch", "Electronics", 800.00),
-    ("P017", "Carregador USB-C", "Electronics", 35.00),
-    ("P018", "Hub USB", "Electronics", 60.00),
-    ("P019", "Cabo HDMI 2m", "Electronics", 25.00),
-    ("P020", "Mouse Pad", "Accessories", 20.00),
+    ("P001", "Notebook Dell", "Eletrônicos", 2800.00),
+    ("P002", "Mouse Logitech", "Eletrônicos", 45.00),
+    ("P003", "Teclado Mecânico", "Eletrônicos", 250.00),
+    ("P004", "Monitor LG 24\"", "Eletrônicos", 850.00),
+    ("P005", "Webcam HD", "Eletrônicos", 180.00),
+    ("P006", "Fone Bluetooth", "Eletrônicos", 120.00),
+    ("P007", "SSD 500GB", "Eletrônicos", 350.00),
+    ("P008", "Livro Python", "Livros", 45.00),
+    ("P009", "Livro Ciência de Dados", "Livros", 65.00),
+    ("P010", "Livro Machine Learning", "Livros", 80.00),
+    ("P011", "Caderno", "Papelaria", 15.00),
+    ("P012", "Caneta Pack 10", "Papelaria", 12.00),
+    ("P013", "Mochila Executiva", "Acessórios", 180.00),
+    ("P014", "Garrafa Térmica", "Acessórios", 45.00),
+    ("P015", "Tablet Samsung", "Eletrônicos", 1200.00),
+    ("P016", "SmartWatch", "Eletrônicos", 800.00),
+    ("P017", "Carregador USB-C", "Eletrônicos", 35.00),
+    ("P018", "Hub USB", "Eletrônicos", 60.00),
+    ("P019", "Cabo HDMI 2m", "Eletrônicos", 25.00),
+    ("P020", "Mouse Pad", "Acessórios", 20.00),
 ]
 
-REGIONS = ["Southeast", "South", "Northeast", "North", "Midwest"]
+REGIONS = ["Sudeste", "Sul", "Nordeste", "Norte", "Centro-Oeste"]
 
 # Probabilidades para tornar dados mais realistas
 CATEGORY_WEIGHTS = {
-    "Electronics": 0.5,
-    "Books": 0.2,
-    "Stationery": 0.15,
-    "Accessories": 0.15,
+    "Eletrônicos": 0.5,
+    "Livros": 0.2,
+    "Papelaria": 0.15,
+    "Acessórios": 0.15,
 }
 
 def generate_transaction_id(index):
